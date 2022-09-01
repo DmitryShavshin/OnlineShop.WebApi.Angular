@@ -22,15 +22,70 @@ namespace OnlineShop.WebApi.Angular.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult<IEnumerable<Brand>>> Get()
+           => Ok(await _brand.GetAllBrands());
+
+
+        [HttpGet]
         [Route("CreateBrand")]
-        public IActionResult CreateBrand() => Ok();
+        public IActionResult Create() => Ok();
 
         [HttpPost]
         [Route("CreateBrand")]
-        public async Task<IActionResult> CreateBrand(Brand brand)
+        public async Task<IActionResult> Create(Brand brand)
         {
-            await _brand.CreateBrand(brand);
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                var result = await _brand.GetBrandByName(brand.Name);
+                if (result == null)
+                {
+                    await _brand.CreateBrand(brand);
+                    return Ok("Brand was created");
+                }
+                else
+                    return BadRequest("Brand allready exist");
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet]
+        [Route("UpdateBrand/{id}")]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var result = await _brand.GetBrandById(id);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        [Route("UpdateBrand")]
+        public async Task<IActionResult> Update(Brand response)
+        {
+            if (ModelState.IsValid) 
+            {
+                var result = await _brand.GetBrandById(response.Id);
+                if (result != null)
+                {
+                    await _brand.UpdateBrand(response);
+                    return Ok(result);
+                }
+                else
+                    return BadRequest("Brand was not found");
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpDelete]
+        [Route("DeleteBrand/{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _brand.GetBrandById(id);
+            if (result != null)
+            {
+                await _brand.RemoveBrand(result);
+                return Ok(result);
+            }
+            else
+                return BadRequest("Brand not found");
         }
     }
 }
