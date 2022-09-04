@@ -4,7 +4,7 @@ namespace OnlineShop.WebApi.Angular.Interfaces
 {
     public interface IBrand
     {
-        public Task<IEnumerable<Brand>> GetAllBrands();  
+        public Task<IEnumerable<Brand>> GetListBrands();  
         public Task<Brand> GetBrandByName(string name);
         public Task<Brand> GetBrandById(Guid id);
         public Task CreateBrand(Brand brand);

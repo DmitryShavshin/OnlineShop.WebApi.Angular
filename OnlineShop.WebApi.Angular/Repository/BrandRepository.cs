@@ -13,7 +13,7 @@ namespace OnlineShop.WebApi.Angular.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<Brand>> GetAllBrands()
+        public async Task<IEnumerable<Brand>> GetListBrands()
         {
             return await _context.Brands.ToListAsync();
         }

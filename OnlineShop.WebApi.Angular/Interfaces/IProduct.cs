@@ -5,7 +5,7 @@ namespace OnlineShop.WebApi.Angular.Interfaces
 {
     public interface IProduct
     {
-        public Task<IEnumerable<Product>> GetAllProducts();
+        public Task<IEnumerable<Product>> GetListProducts();
         public Task<Product> GetProductById(Guid id);
         public Task<Product> GetProductByName(string name);
         public Task CreateProduct(Product productRequest);

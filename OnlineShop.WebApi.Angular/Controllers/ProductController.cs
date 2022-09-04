@@ -26,7 +26,7 @@ namespace OnlineShop.WebApi.Angular.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
-            => Ok(await _product.GetAllProducts());
+            => Ok(await _product.GetListProducts());
         
 
         [HttpGet]
@@ -43,7 +43,7 @@ namespace OnlineShop.WebApi.Angular.Controllers
                 return BadRequest("Product allready exist");
 
             await _product.CreateProduct(product);
-            return Ok(await _product.GetAllProducts());
+            return Ok(await _product.GetListProducts());
         }
 
         [HttpGet]

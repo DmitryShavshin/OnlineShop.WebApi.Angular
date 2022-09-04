@@ -12,7 +12,7 @@ namespace OnlineShop.WebApi.Angular.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<Product>> GetAllProducts()
+        public async Task<IEnumerable<Product>> GetListProducts()
         {
             IEnumerable<Product> products = await _context.Products
                                 .Include(b => b.Brand)

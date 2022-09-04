@@ -23,7 +23,7 @@ namespace OnlineShop.WebApi.Angular.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Brand>>> Get()
-           => Ok(await _brand.GetAllBrands());
+           => Ok(await _brand.GetListBrands());
 
 
         [HttpGet]
