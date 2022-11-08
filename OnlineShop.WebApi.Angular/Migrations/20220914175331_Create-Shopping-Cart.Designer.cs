@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.WebApi.Angular.Data;
 
@@ -11,9 +12,10 @@ using OnlineShop.WebApi.Angular.Data;
 namespace OnlineShop.WebApi.Angular.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220914175331_Create-Shopping-Cart")]
+    partial class CreateShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,17 +101,11 @@ namespace OnlineShop.WebApi.Angular.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<Guid>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -162,7 +158,7 @@ namespace OnlineShop.WebApi.Angular.Migrations
                         new
                         {
                             Id = new Guid("5ffdeb4a-2b28-4fc8-9d41-30bd16984923"),
-                            ConcurrencyStamp = "4b2467c9-cfea-468d-9783-e6e1dbf61acb",
+                            ConcurrencyStamp = "2394e4ac-4218-4950-afbd-50ffce013ac2",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -238,13 +234,13 @@ namespace OnlineShop.WebApi.Angular.Migrations
                         {
                             Id = new Guid("08d68e62-6e3b-4cf4-bfb0-49d59f670a5b"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "afab1ea0-1d87-4447-bba9-b50209ccc4c7",
+                            ConcurrencyStamp = "3da4a16d-6c68-4846-8681-48b0a74134ed",
                             Email = "admin@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEfpJjtIfluHNjfEr2XQ/5vP/wAvS6jjZ5BQ5P18Iq4aNcSnpaXjKD30E4IXBpyCQw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ+TRXRjZZ8K5Rkw9XxcIRT4AWki52/WFaP+U0GU2LsNlVfM88SQ+RRg3cCLko5Qmg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -450,75 +446,6 @@ namespace OnlineShop.WebApi.Angular.Migrations
                         });
                 });
 
-            modelBuilder.Entity("OnlineShop.WebApi.Angular.Models.Order", b =>
-                {
-                    b.Property<Guid>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ApplicationUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("OrderId");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("OnlineShop.WebApi.Angular.Models.OrderDetails", b =>
-                {
-                    b.Property<Guid>("OrderDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("OrderDetailId");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("OrderDetails");
-                });
-
             modelBuilder.Entity("OnlineShop.WebApi.Angular.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -619,13 +546,6 @@ namespace OnlineShop.WebApi.Angular.Migrations
                         });
                 });
 
-            modelBuilder.Entity("OnlineShop.WebApi.Angular.Models.ApplicationUserRole", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>");
-
-                    b.HasDiscriminator().HasValue("ApplicationUserRole");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("OnlineShop.WebApi.Angular.Models.ApplicationRole", null)
@@ -707,40 +627,6 @@ namespace OnlineShop.WebApi.Angular.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("OnlineShop.WebApi.Angular.Models.Order", b =>
-                {
-                    b.HasOne("OnlineShop.WebApi.Angular.Models.ApplicationUser", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
-            modelBuilder.Entity("OnlineShop.WebApi.Angular.Models.OrderDetails", b =>
-                {
-                    b.HasOne("OnlineShop.WebApi.Angular.Models.Order", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OnlineShop.WebApi.Angular.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OnlineShop.WebApi.Angular.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("OnlineShop.WebApi.Angular.Models.Product", b =>
                 {
                     b.HasOne("OnlineShop.WebApi.Angular.Models.Brand", "Brand")
@@ -752,19 +638,9 @@ namespace OnlineShop.WebApi.Angular.Migrations
                     b.Navigation("Brand");
                 });
 
-            modelBuilder.Entity("OnlineShop.WebApi.Angular.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
             modelBuilder.Entity("OnlineShop.WebApi.Angular.Models.Category", b =>
                 {
                     b.Navigation("CategoryProducts");
-                });
-
-            modelBuilder.Entity("OnlineShop.WebApi.Angular.Models.Order", b =>
-                {
-                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("OnlineShop.WebApi.Angular.Models.Product", b =>

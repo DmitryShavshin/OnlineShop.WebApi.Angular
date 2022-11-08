@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.WebApi.Angular.Models;
-
+using OnlineShop.WebApi.Angular.Services;
 
 namespace OnlineShop.WebApi.Angular.Data
 {
@@ -15,8 +15,15 @@ namespace OnlineShop.WebApi.Angular.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
+
+
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
+
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<ApplicationRole> Roles { get; set; }
+        public DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

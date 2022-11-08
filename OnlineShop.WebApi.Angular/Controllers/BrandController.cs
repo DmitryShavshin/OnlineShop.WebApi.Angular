@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShop.WebApi.Angular.Data;
 using OnlineShop.WebApi.Angular.Interfaces;
 using OnlineShop.WebApi.Angular.Models;
 

@@ -3,7 +3,8 @@ using OnlineShop.WebApi.Angular.Data;
 using OnlineShop.WebApi.Angular.Interfaces;
 using OnlineShop.WebApi.Angular.Models;
 
-namespace OnlineShop.WebApi.Angular.Repositories
+
+namespace OnlineShop.WebApi.Angular.Repository
 {
     public class ProductRepository : IProduct
     {
@@ -23,7 +24,12 @@ namespace OnlineShop.WebApi.Angular.Repositories
         }
         public async Task<Product> GetProductById(Guid id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.Where(p => p.Id == id)
+                .Include(b => b.Brand)
+                .Include(cp => cp.CategoryProducts)
+                .ThenInclude(c => c.Category)
+                .FirstOrDefaultAsync();
+                
             return product;
         }
 
@@ -43,7 +49,7 @@ namespace OnlineShop.WebApi.Angular.Repositories
 
         public async Task UpdateProduct(Product productRequest)
         {
-            var product = await GetProductByName(productRequest.Name);
+            var product = await GetProductById(productRequest.Id);
             product.Name = productRequest.Name;
             product.Title = productRequest.Title;
             product.Price = productRequest.Price;
@@ -62,7 +68,7 @@ namespace OnlineShop.WebApi.Angular.Repositories
 
         public async Task Save()
         {
-           await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

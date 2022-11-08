@@ -26,10 +26,8 @@ namespace OnlineShop.WebApi.Angular.Models
         [ForeignKey("Brand")]
         public Guid BrandId { get; set; }
         [ValidateNever]
-        [JsonIgnore]
         public Brand Brand { get; set; }
         [ValidateNever]
-        [JsonIgnore]
         public IEnumerable<CategoryProduct> CategoryProducts { get; set; }
     }
 }

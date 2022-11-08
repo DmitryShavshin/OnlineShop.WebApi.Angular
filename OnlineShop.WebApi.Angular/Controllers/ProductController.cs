@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using OnlineShop.WebApi.Angular.Data;
 using OnlineShop.WebApi.Angular.Interfaces;
 using OnlineShop.WebApi.Angular.Models;
@@ -11,17 +10,11 @@ namespace OnlineShop.WebApi.Angular.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProduct _product;
-        private readonly IBrand _brand;
-        private readonly ICategory _category;
-        private readonly ApplicationDbContext _context;
+        private readonly IProduct _product;    
 
-        public ProductController(IProduct product, IBrand brand, ICategory category, ApplicationDbContext context)
+        public ProductController(IProduct product)
         {
-            _product = product;
-            _brand = brand;
-            _category = category;
-            _context = context;
+            _product = product;           
         }
 
         [HttpGet]
@@ -63,7 +56,7 @@ namespace OnlineShop.WebApi.Angular.Controllers
 
         [HttpPut]
         [Route("UpdateProduct")]
-        public async Task<IActionResult> UpdateProduct(Product productRequest)
+        public async Task<ActionResult<Product>> UpdateProduct(Product productRequest)
         {
             if (ModelState.IsValid)
             {
@@ -80,13 +73,13 @@ namespace OnlineShop.WebApi.Angular.Controllers
 
         [HttpDelete]
         [Route("Delete/{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<ActionResult<IEnumerable<Product>>> Delete(Guid id)
         {
             var product = await _product.GetProductById(id);
             if (product != null)
             {
                 await _product.RemoveProduct(product);
-                return Ok("Product was removed suxessfully");
+                return Ok(await _product.GetListProducts());
             }
             else
                 return BadRequest("Product not found");
