@@ -23,6 +23,9 @@ namespace OnlineShop.WebApi.Angular.Data
 
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<ApplicationRole> Roles { get; set; }
+        public DbSet<UserContact> UserContacts { get; set; }
+        public DbSet<UserHomeAddress> UserHomeAddress { get; set; }
+        public DbSet<UserWorkAddress> UserWorkAddress { get; set; }
         public DbSet<ApplicationUserRole> ApplicationUserRoles { get; set; }
 
 
