@@ -22,9 +22,6 @@ namespace OnlineShop.WebApi.Angular.Controllers
             => Ok(await _product.GetListProducts());
         
 
-        [HttpGet]
-        [Route("CreateProduct")]
-        public IActionResult CreateProduct() => Ok();
 
         [HttpPost]
         [Route("CreateProduct")]

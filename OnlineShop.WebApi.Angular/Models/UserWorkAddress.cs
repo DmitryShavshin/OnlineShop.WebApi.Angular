@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace OnlineShop.WebApi.Angular.Models
 {
@@ -14,7 +15,9 @@ namespace OnlineShop.WebApi.Angular.Models
         public int? PostalCode { get; set; }
 
         [ForeignKey("ApplicationUser")]
+        [JsonIgnore]
         public Guid UserId { get; set; }
+        [JsonIgnore]
         public ApplicationUser ApplicationUser { get; set; }
     }
 }

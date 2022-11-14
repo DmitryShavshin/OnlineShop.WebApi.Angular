@@ -5,9 +5,9 @@ namespace OnlineShop.WebApi.Angular.Models.DTOs
     public class OrderRequestDto
     {
         [Required]
-        public string cartId { get; set; }
+        public string UserId { get; set; }
         [Required]
-        public string userId { get; set; }
+        public string CartId { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]

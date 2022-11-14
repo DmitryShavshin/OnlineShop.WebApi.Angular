@@ -8,7 +8,7 @@ using OnlineShop.WebApi.Angular.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -42,6 +42,7 @@ builder.Services.AddTransient<IProduct, ProductRepository>();
 builder.Services.AddTransient<ICategory, CategoryRepository>();
 builder.Services.AddTransient<IBrand, BrandRepository>();
 builder.Services.AddTransient<IOrder, OrderRepository>();
+builder.Services.AddTransient<IUser, UserRepository>();
 
 
 
@@ -71,7 +72,9 @@ builder.Services.AddAuthentication(options =>
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(option =>
+    option.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
